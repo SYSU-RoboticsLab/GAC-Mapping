@@ -1,0 +1,96 @@
+%YAML:1.0
+
+#camera calibration 
+model_type: PINHOLE
+camera_name: camera
+#Image Downsample need
+down_sample: 1
+image_width: 480 
+image_height: 300 
+focal_length: 460 
+
+distortion_parameters:
+   k1: -0.0649273089928418
+   k2: 0.0997438938625523
+   p1: -0.000228073393077066
+   p2: 0.000620191962166107
+projection_parameters:
+   fx: 322.670919226 #645.341838451 #1290.68367690262
+   fy: 322.608268231 #645.216536461 #1290.43307292274
+   cx: 230.314149505 #460.628299011 #921.256598021541
+   cy: 152.837751842 #305.675503684 #611.351007367554
+
+# Rotation from lidar frame to camera center, cam^R_LiDAR (aka R_CL)
+extrinsicRotation: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 0.999905703250816,  0.00884557481841156,  0.0105043044806988,
+           0.0105452222364503,  -0.00459192232069450,  -0.999933854081051, 
+           -0.00879675476952827,  0.999950333794401,  -0.00468476786961669]
+# Translation from lidar frame to camera center, cam^T_LiDAR
+extrinsicTranslation: !!opencv-matrix
+   rows: 3
+   cols: 1
+   dt: d
+   data: [ 0.293474999461009, -0.365269742706044, -0.0826443587013531] #-0.086246, 0.015, 0.018 
+
+#feature traker parameters
+max_keyline_count: 80 
+keyline_detector_octaves: 1
+keyline_detector_scale: 1.2
+
+lbd_descriptor_width_of_band: 7
+
+max_keypoint_count: 50
+min_keypoint_dist: 40
+F_threshold: 1.0
+sliding_window_size: 5
+
+#laser registrator parameters
+laser_scan_number: 16
+horizon_scans: 1800
+minimum_range: 0.1
+angle_res_x: 0.2
+angle_res_y: 2.0
+angle_bottom: 15.1
+crop_near: 2.0
+crop_far: 60
+
+edge_threshold: 2
+surf_threshold: 1    # for ugv, if you want to get more accurate poses, this could set smaller
+nearest_feature_search_dist: 25
+occlude_threshold: 0.3
+range_diff_threshold: 0.02
+
+distortion: 0     # There are some problems in the implementation of the algorithm, it is best set 0
+scan_period: 0.1  # The time of one lidar scan, unit is second
+distance_sq_threshold: 25
+nearby_scan: 2.5
+visual_weight_max: 0.1  # [0,1]   # The maximum weight coefficient of the visual part residual item in the front-end odometry part
+
+# submap para
+submap_length: 30 #45
+keep_squre_distance: 3600 #400
+
+# thumbnail para
+ndt_resolution_thumbnail: 2.0
+ndt_resolution_match: 2.0
+need_check_direction: 0 # On a drone, if your equipment (default is camera) Z axis is facing down, such as the installation 
+                        # method in GrAco dataset(45 degree face down), set 1, otherwise set 0
+
+
+# output odom para, tum format
+need_pub_odom: 1
+out_odom_path: /home/sysu-rapid/gacm_output/data/testSavemap/   # must end with "/"
+
+# for memory save
+cache_path: /home/sysu-rapid/gacm_output/cache/     # must end with "/"
+
+# no use / deprecate
+gt_path: deprecate
+gt_start_time: 0
+out_gt_path: deprecate
+air_gps: 0
+
+

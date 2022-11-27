@@ -1,0 +1,5 @@
+[2020] GAC-Mapping V1.0
+[25/11/2022] GAC-Mapping v1.1.0 Change: 
+    Organize the code and documents; 
+    Use Patch-NetVLAD instead of NetVLAD for loop detect; 
+    Fix bugs and standardize algorithm input and output.

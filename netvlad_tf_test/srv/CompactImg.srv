@@ -1,0 +1,3 @@
+string req_img_name
+---
+float32[] res_des

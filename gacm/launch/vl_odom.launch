@@ -1,0 +1,42 @@
+<launch>
+    <!--- Sim Time -->
+    <param name="/use_sim_time" value="false" />
+
+    <!-- debug print -->
+    <param name="/gacm/debug" type="bool" value="false"/>
+    <!-- true: display in the camera frame; false: in the lidar frame -->
+    <param name="/gacm/display_frame_cam" type="bool" value="true"/>
+
+    <!-- major -->
+    <arg name="config_path" default = "$(find gacm)/config/graco_uav.yaml" />  <!-- aerial-03 -->
+    <arg name="config_path1" default = "$(find gacm)/config/graco_uav.yaml" />  <!-- ground-06 -->
+    <arg name="config_path2" default = "$(find gacm)/config/graco_uav.yaml" />   <!-- aerial-07 -->
+    <arg name="config_path3" default = "$(find gacm)/config/graco_ugv.yaml" />
+    <arg name="config_path4" default = "$(find gacm)/config/graco_ugv.yaml" />
+
+    <!-- <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/left_camera/image raw out:=/camera/image_raw" /> -->
+
+    <node pkg="gacm" type="featureTrackingNode"    name="featureTrackingNode"    output="screen">
+    	<param name="config_file" type="string" value="$(arg config_path)"/>
+        <param name="config_file1" type="string" value="$(arg config_path1)"/>
+        <param name="config_file2" type="string" value="$(arg config_path2)"/>
+        <param name="config_file3" type="string" value="$(arg config_path3)"/>
+        <param name="config_file4" type="string" value="$(arg config_path4)"/>
+        <remap from="/image_raw" to="/camera_left/image_raw" />
+        <remap from="/velodyne_points" to="/velodyne/points" />
+    </node>
+
+    <node pkg="gacm" type="plOdometryNode"    name="plOdometryNode"    output="screen">
+    	<param name="config_file" type="string" value="$(arg config_path)" />
+        <param name="config_file1" type="string" value="$(arg config_path1)"/>
+        <param name="config_file2" type="string" value="$(arg config_path2)"/>
+        <param name="config_file3" type="string" value="$(arg config_path3)"/>
+        <param name="config_file4" type="string" value="$(arg config_path4)"/>
+    </node>
+
+    <arg name="rviz" default="false" />
+    <group if="$(arg rviz)">
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find gacm)/rviz_cfg/gacm.rviz" />
+    </group>
+ 
+</launch>

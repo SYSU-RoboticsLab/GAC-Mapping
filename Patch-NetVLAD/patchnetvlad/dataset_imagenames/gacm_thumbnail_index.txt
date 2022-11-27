@@ -1,0 +1,16 @@
+/home/inntoy/gac_output/pictures/submap_img/submap0.png
+/home/inntoy/gac_output/pictures/submap_img/submap1.png
+/home/inntoy/gac_output/pictures/submap_img/submap2.png
+/home/inntoy/gac_output/pictures/submap_img/submap3.png
+/home/inntoy/gac_output/pictures/submap_img/submap4.png
+/home/inntoy/gac_output/pictures/submap_img/submap5.png
+/home/inntoy/gac_output/pictures/submap_img/submap6.png
+/home/inntoy/gac_output/pictures/submap_img/submap7.png
+/home/inntoy/gac_output/pictures/submap_img/submap8.png
+/home/inntoy/gac_output/pictures/submap_img/submap9.png
+/home/inntoy/gac_output/pictures/submap_img/submap10.png
+/home/inntoy/gac_output/pictures/submap_img/submap11.png
+/home/inntoy/gac_output/pictures/submap_img/submap12.png
+/home/inntoy/gac_output/pictures/submap_img/submap13.png
+/home/inntoy/gac_output/pictures/submap_img/submap14.png
+/home/inntoy/gac_output/pictures/submap_img/submap15.png

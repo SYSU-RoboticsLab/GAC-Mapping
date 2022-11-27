@@ -1,0 +1,96 @@
+%YAML:1.0
+
+# camera calibration 
+model_type: PINHOLE
+camera_name: camera
+# Image Downsample need
+down_sample: 1
+# The size of the image after scaling, the current scaling ratio is 0.3
+image_width: 480 # origin: 1600
+image_height: 330 # origin: 1100
+focal_length: 460 #920
+
+distortion_parameters:
+   k1: -0.09786697008306534
+   k2:  0.08078150351404789
+   p1:  5.543660982644687e-05
+   p2:  0.00018974368443100656
+projection_parameters:
+   fx: 278.26232432 # 927.541081079634 * 480 / 1600
+   fy: 277.61674466 # 925.389148860952 * 330 / 1100
+   cx: 243.55798201 # 811.859940220661 * 480 / 1600
+   cy: 167.78862207 # 559.292905754054 * 330 / 1100
+
+# Rotation from lidar frame to camera center, cam^R_LiDAR (aka R_CL)
+extrinsicRotation: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ -0.99953545, -0.02153628, -0.02156535,
+           -0.02163541,  0.00302531,  0.99976135,
+           -0.0214659 ,  0.99976349, -0.00348985]
+# Translation from lidar frame to camera center, cam^T_LiDAR
+extrinsicTranslation: !!opencv-matrix
+   rows: 3
+   cols: 1
+   dt: d
+   data: [ 0.2308779,  0.17570245, -0.04630313] #-0.086246, 0.015, 0.018 
+
+#feature traker parameters
+max_keyline_count: 120  # 60
+keyline_detector_octaves: 1
+keyline_detector_scale: 1.2
+
+lbd_descriptor_width_of_band: 7
+
+max_keypoint_count: 100 # 50
+min_keypoint_dist: 40
+F_threshold: 1.0
+sliding_window_size: 5
+
+#laser registrator parameters
+laser_scan_number: 16
+horizon_scans: 1800  # 1875
+minimum_range: 0.3
+angle_res_x: 0.2   # 0.192
+angle_res_y: 2.0
+angle_bottom: 15.1
+crop_near: 1.0
+crop_far: 80
+
+edge_threshold: 2
+surf_threshold: 1.5  # for uav, to get more points, this should set larger (which will improve ndt+icp accuracy)
+nearest_feature_search_dist: 25
+occlude_threshold: 0.3
+range_diff_threshold: 0.02
+
+# point cloud removes distortion
+distortion: 0        # There are some problems in the implementation of the algorithm, it is best set 0
+scan_period: 0.1     # The time of one lidar scan, unit is second
+distance_sq_threshold: 25
+nearby_scan: 2.5
+visual_weight_max: 0.7  # [0,1]   # The maximum weight coefficient of the visual part residual item in the front-end odometry part
+
+# submap para
+submap_length: 55 #45   # The number of lidar frames contained in the sub-picture affects the number of sub-pictures (the sub-pictures are at least 5m apart before preparing to generate one)
+keep_squre_distance: 5000 # 5000 means nearly 70 meters
+
+# thumbnail para
+ndt_resolution_thumbnail: 4.0
+ndt_resolution_match: 5   # for uav, this value should not be too small, otherwise will bring segment fault in ndt
+need_check_direction: 1 # On a drone, if your equipment (default is camera) Z axis is facing down, such as the installation 
+                        # method in GrAco dataset(45 degree face down), set 1, otherwise set 0
+
+# output odom para, tum format
+need_pub_odom: 1
+out_odom_path: /home/sysu-rapid/gacm_output/data/testSavemap/   # must end with "/"
+
+# for memory save
+cache_path: /home/sysu-rapid/gacm_output/cache/     # must end with "/"
+
+# no use / deprecate
+gt_path: deprecate
+gt_start_time: 0
+out_gt_path: deprecate
+air_gps: 0
+

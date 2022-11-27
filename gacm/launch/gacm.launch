@@ -1,0 +1,53 @@
+<launch>
+    
+    <!-- debug print -->
+    <param name="/gacm/debug" type="bool" value="false"/>
+    <!-- true: display in the camera frame; false: in the lidar frame -->
+    <param name="/gacm/display_frame_cam" type="bool" value="false"/>
+
+    <arg name="config_path" default = "$(find gacm)/config/car.yaml" />
+    <arg name="config_path1" default = "$(find gacm)/config/car.yaml" />
+    <arg name="config_path2" default = "$(find gacm)/config/uav.yaml" />
+    <arg name="config_path3" default = "$(find gacm)/config/uav.yaml" />
+    <arg name="config_path4" default = "$(find gacm)/config/uav.yaml" />
+    <arg name="gacm_path" default = "$(find gacm)/" />
+
+    <!--- republish -->
+    <node name="republish" type="republish" pkg="image_transport" output="screen" args="compressed in:=/left_camera/image raw out:=/camera/image_raw" />
+
+    <node pkg="gacm" type="featureTrackingNode"    name="featureTrackingNode"    output="screen">
+    	<param name="config_file" type="string" value="$(arg config_path)"/>
+        <param name="config_file1" type="string" value="$(arg config_path1)"/>
+        <param name="config_file2" type="string" value="$(arg config_path2)"/>
+        <param name="config_file3" type="string" value="$(arg config_path3)"/>
+        <param name="config_file4" type="string" value="$(arg config_path4)"/>
+        <param name="gacm_folder" type="string" value="$(arg gacm_path)" />
+        <!-- change your topic name -->
+        <remap from="/image_raw" to="/camera/image_raw" />
+        <remap from="/velodyne_points" to="/velodyne_points" />
+    </node>
+
+    <node pkg="gacm" type="plOdometryNode"    name="plOdometryNode"    output="screen">
+    	<param name="config_file" type="string" value="$(arg config_path)" />
+        <param name="config_file1" type="string" value="$(arg config_path1)"/>
+        <param name="config_file2" type="string" value="$(arg config_path2)"/>
+        <param name="config_file3" type="string" value="$(arg config_path3)"/>
+        <param name="config_file4" type="string" value="$(arg config_path4)"/>
+        <param name="gacm_folder" type="string" value="$(arg gacm_path)" />
+    </node>
+
+    <node pkg="gacm" type="submapManagerNode" name="submapManagerNode" output="screen">
+        <param name="config_file" type="string" value="$(arg config_path)" />
+        <param name="config_file1" type="string" value="$(arg config_path1)"/>
+        <param name="config_file2" type="string" value="$(arg config_path2)"/>
+        <param name="config_file3" type="string" value="$(arg config_path3)"/>
+        <param name="config_file4" type="string" value="$(arg config_path4)"/>
+        <param name="gacm_folder" type="string" value="$(arg gacm_path)" />
+    </node>
+        
+    <arg name="rviz" default="true" />
+    <group if="$(arg rviz)">
+        <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find gacm)/rviz_cfg/gacm.rviz" />
+    </group>
+
+</launch>
