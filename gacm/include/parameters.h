@@ -40,6 +40,8 @@
 #include <pcl/conversions.h>   
 #include <pcl_ros/transforms.h>
 
+#include <dirent.h>
+
 // camera parameters
 extern int ROW;
 extern int COL;

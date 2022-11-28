@@ -237,6 +237,25 @@ void readParameters(ros::NodeHandle &n)
     erase_comment(CACHE_PATH);
     fsSettings.release();
 
+
+    if(opendir(OUT_ODOM_PATH.c_str()) == NULL)
+    {
+        std::string default_dir = std::getenv("HOME") + std::string("/gacm_output/data/testSavemap/");
+        ROS_WARN_STREAM("Odom Path: " + OUT_ODOM_PATH + " does not exist! Use default path: " + default_dir);
+        OUT_ODOM_PATH = default_dir;
+        if(opendir(OUT_ODOM_PATH.c_str()) == NULL)
+            system(("mkdir -p " + OUT_ODOM_PATH).c_str()); 
+    }
+
+    if(opendir(CACHE_PATH.c_str()) == NULL)
+    {
+        std::string default_dir = std::getenv("HOME") + std::string("/gacm_output/cache/");
+        ROS_WARN_STREAM("Cache Path: " + CACHE_PATH + " does not exist! Use default path: " + default_dir);
+        CACHE_PATH = default_dir;
+        if(opendir(CACHE_PATH.c_str()) == NULL)
+            system(("mkdir -p " + CACHE_PATH).c_str()); 
+    }
+
 }
 
 void erase_comment(std::string& str)
@@ -275,8 +294,8 @@ void status(int length, float percent)
 
 void printCopyright()
 {
-    std::cout << "\nGAC-Mapping  Copyright (C) Copyright (C) 2020-2022 JinHao He, Yilin Zhu\n"
+    std::cout << "\n\033[1mGAC-Mapping  Copyright (C) Copyright (C) 2020-2022 JinHao He, Yilin Zhu\n"
             << "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
             << "This is free software, and you are welcome to redistribute it\n"
-            << "under certain conditions; type `show c' for details.\n\n";
+            << "under certain conditions; type `show c' for details.\033[0m\n\n";
 }
