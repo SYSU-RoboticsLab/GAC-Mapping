@@ -8,7 +8,7 @@ new: Organize the code and documents; Use Patch-NetVLAD instead of NetVLAD for l
 
 
 
-***GAC-Mapping (GACM for short)*** is a multi-session SLAM to solve the mapping and localization of ground-aerial heterogeneous robot clusters in urban scenes. In GACM, a **Visual-LiDAR** ego-motion estimation module that considers point, line and planar constraints can provide robust odometry information. Thumbnail images representing obstacle outlines are generated and descriptors are extracted using a neural network to help perform data association between separate runs. Map segments and the robot poses are organized together and are updated during a pose graph optimization procedure. We provide guidance and examples how to run GACM on sample data and [GrAco Dataset](https://sites.google.com/view/graco-dataset).
+***GAC-Mapping (GACM for short)*** is a multi-session SLAM to solve the mapping and localization of ground-aerial heterogeneous robot clusters in urban scenes. In GACM, a **Visual-LiDAR** ego-motion estimation module that considers point, line and planar constraints can provide robust odometry information. Thumbnail images representing obstacle outlines are generated and descriptors are extracted using a neural network to help perform data association between separate runs. Map segments and the robot poses are organized together and are updated during a pose graph optimization procedure. We provide guidance and examples how to run GACM on sample data and GrAco dataset ([website](https://sites.google.com/view/graco-dataset) or [github](https://github.com/SYSU-RoboticsLab/GrAco)).
 
 <div align="center">
     <img src="./doc/groundAerialMapping.png" style="zoom:48%;" />
@@ -202,6 +202,8 @@ We provide some sample data (including two ground sequences and one aerial seque
 ### GrAco Dataset
 
 **Dataset website**: https://sites.google.com/view/graco-dataset
+
+(or download data from github: https://github.com/SYSU-RoboticsLab/GrAco)
 
 **Notice**: If you plan to run `ground-05` (duration over 400 seconds), you need to set the `submap_length` parameter in the configuration file to 70 or more.
 
